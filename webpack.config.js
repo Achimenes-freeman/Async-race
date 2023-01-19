@@ -1,6 +1,8 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const {
+    CleanWebpackPlugin
+} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
@@ -11,7 +13,7 @@ const isProd = !isDev;
 const optimization = () => {
     const config = {}
 
-    if (isProd){
+    if (isProd) {
         config.minimizer = [
             new CssMinimizerPlugin(),
             new TerserWebpackPlugin()
@@ -24,7 +26,7 @@ const optimization = () => {
 const cssLoaders = (extraLoaders) => {
     const loaders = [MiniCssExtractPlugin.loader, 'css-loader'];
 
-    if (extraLoaders){
+    if (extraLoaders) {
         loaders.push(extraLoaders)
     }
 
@@ -62,8 +64,7 @@ module.exports = {
     ],
 
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.css$/,
                 use: cssLoaders()
             },
@@ -84,12 +85,20 @@ module.exports = {
                         '@babel/preset-env'
                     ]
                 }
-                
+
+            },
+            {
+                test: /\.ts$/,
+                use: ['ts-loader'],
+                exclude: /node_modules/,
             },
             {
                 test: /\.(png|svg|eps|jpg)$/,
                 use: ['file-loader']
             }
         ]
-    }
+    },
+    resolve: {
+        extensions: ['.ts', '.js'],
+    },
 }

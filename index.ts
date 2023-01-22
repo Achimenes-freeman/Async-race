@@ -1,5 +1,14 @@
-import { CarsList } from './src/components/CarsList/CarsList';
+import { Garage } from './src/components/Garage/Garage';
+
+import { getCarsData, createCar } from './src/helpers/api';
 
 import './index.scss';
 
-document.documentElement.append(new CarsList([1, 2, 3, 4, 5, 6, 7]).render());
+
+const getGarage = async ()=>{
+    const body = document.querySelector('body')!;
+    body.append(new Garage(await getCarsData()).render());
+
+}
+
+getGarage();

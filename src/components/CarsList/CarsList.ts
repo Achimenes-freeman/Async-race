@@ -1,10 +1,12 @@
 import { Track } from '../Track/Track';
 
+import { CarsData } from '../../helpers/types';
+
 import './CarsList.scss';
 
 export class CarsList {
-    carsData: Array<number>;
-    constructor(carsData: Array<number>) {
+    carsData: CarsData;
+    constructor(carsData: CarsData) {
         this.carsData = carsData;
     }
 
@@ -15,7 +17,7 @@ export class CarsList {
         this.carsData.forEach((item) => {
             const listItem = document.createElement('li');
             listItem.className = 'cars-list-item';
-            listItem.append(new Track('tesla').render());
+            listItem.append(new Track(item).render());
             list.append(listItem);
         });
 

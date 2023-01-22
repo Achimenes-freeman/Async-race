@@ -1,12 +1,19 @@
 import { Car } from '../Car/Car';
 import { Button } from '../Button/Button';
 
+import { SingleCar } from '../../helpers/types';
+
 import './Track.scss';
 
 export class Track {
     name: string;
-    constructor(name: string) {
+    color: string;
+    id: number;
+
+    constructor({name, color, id}: SingleCar) {
         this.name = name;
+        this.color = color;
+        this.id = id;
     }
 
     render() {
@@ -37,7 +44,7 @@ export class Track {
 
         const trackRoad = document.createElement('div');
         trackRoad.className = 'track-road';
-        trackRoad.append(startButtons, new Car('#786360').render());
+        trackRoad.append(startButtons, new Car(this.color).render());
 
         track.append(trackGeneral, trackRoad, road);
         return track;

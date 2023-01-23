@@ -13,6 +13,7 @@ export class CarsList {
     render() {
         const list = document.createElement('ul');
         list.className = 'cars-list';
+        list.id = 'garage-cars-list';
 
         this.carsData.forEach((item) => {
             const listItem = document.createElement('li');

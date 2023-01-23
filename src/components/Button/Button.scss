@@ -3,6 +3,15 @@
     display: inline-block;
     border-radius: 5px;
     cursor: pointer;
+
+    &[disabled] {
+        opacity: 0.2;
+        cursor: auto;
+
+        &:hover {
+            background-color: $gray;
+        }
+    }
 }
 .big-button {
     padding: 0.5em 1.6em;

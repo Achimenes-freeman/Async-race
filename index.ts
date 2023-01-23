@@ -1,14 +1,17 @@
 import { Garage } from './src/components/Garage/Garage';
 
-import { getCarsData, createCar } from './src/helpers/api';
+import { state } from './src/helpers/state';
 
 import './index.scss';
 
+const { currentPage } = state;
 
-const getGarage = async ()=>{
+const createLayout = async () => {
     const body = document.querySelector('body')!;
-    body.append(new Garage(await getCarsData()).render());
+    if (currentPage === 'garage') {
+        body.append(new Garage().render());
+    } else {
+    }
+};
 
-}
-
-getGarage();
+createLayout();

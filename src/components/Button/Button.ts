@@ -12,6 +12,7 @@ export class Button {
 
     render() {
         const button = document.createElement('button');
+        button.type = 'button';
         button.className = `btn ${this.className} ${
             this.color ? ` ${this.color}` : ''
         }`;

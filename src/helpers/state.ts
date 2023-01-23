@@ -18,4 +18,5 @@ export const state: StateData = {
     sortOrder: null,
     selectedCar: null,
     animation: {},
+    controller: new AbortController(),
 };

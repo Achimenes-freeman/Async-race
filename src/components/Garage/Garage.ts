@@ -35,16 +35,27 @@ export class Garage {
 
         changePaginationButtonsDisable(buttonNext, buttonPrev);
 
-        buttonNext.id = 'next';
-        buttonPrev.id = 'prev';
+        buttonNext.id = 'garage-next';
+        buttonPrev.id = 'garage-prev';
 
         buttonNext.addEventListener('click', async function () {
             if (!this.disabled) {
+                const startRaceBtn = document.getElementById(
+                    'start-race-button'
+                ) as HTMLButtonElement;
+                const resetRaceBtn = document.getElementById(
+                    'reset-race-button'
+                ) as HTMLButtonElement;
+
+                startRaceBtn.disabled = true;
+                resetRaceBtn.disabled = true;
+
                 state.garagePage += 1;
                 changePaginationButtonsDisable(buttonNext, buttonPrev);
                 await updateGarageData();
                 changeGarageCarsList();
                 garagePaginationText.textContent = `page #${state.garagePage}`;
+                startRaceBtn.disabled = false;
             }
         });
 
@@ -60,8 +71,7 @@ export class Garage {
 
         garagePagination.append(garagePaginationText, buttonPrev, buttonNext);
 
-        const {menu, updateForm} = new GarageMenu().render();
-
+        const { menu, updateForm } = new GarageMenu().render();
 
         garageLayout.append(
             menu,

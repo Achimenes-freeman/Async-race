@@ -2,13 +2,15 @@ import './Car.scss';
 
 export class Car {
     color: string;
-
-    constructor(color: string) {
+    id: number;
+    constructor(color: string, id: number) {
         this.color = color;
+        this.id = id;
     }
 
     render() {
         const car = document.createElement('div');
+        car.id = `image-car-${this.id}`;
         car.className = 'car';
         car.innerHTML = `
         <?xml version="1.0" encoding="iso-8859-1"?>

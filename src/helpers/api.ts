@@ -1,5 +1,12 @@
 import { state } from './state';
-import { GetCarsData, CreatedCar, SingleCar, IWinnersRequest,ICarVelocity, ISuccessDrive } from './types';
+import {
+    GetCarsData,
+    CreatedCar,
+    SingleCar,
+    IWinnersRequest,
+    ICarVelocity,
+    ISuccessDrive,
+} from './types';
 
 const BASE_URL = 'http://127.0.0.1:3000';
 export const MAX_GARAGE_PAGE_CARS_ON_LIST = 7;
@@ -58,47 +65,55 @@ export const updateCar = async (car: CreatedCar): Promise<SingleCar> => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(car),
-    })
+    });
 
-    return await response.json()
-}
+    return await response.json();
+};
 
 export const deleteCarFromGarage = async (id: number): Promise<boolean> => {
     const response = await fetch(`${BASE_URL}/garage/${id}`, {
         method: 'DELETE',
-    })
+    });
 
-    return response.ok
-}
+    return response.ok;
+};
 
 export const deleteCarFromWinners = async (id: number): Promise<boolean> => {
     const response = await fetch(`${BASE_URL}/winners/${id}`, {
         method: 'DELETE',
-    })
+    });
 
-    return response.ok
-}
+    return response.ok;
+};
 
-export const startEngine = async (id: number): Promise<ICarVelocity> => {
-    const response = await fetch(`${BASE_URL}/engine?id=${id}&status=started`,{
+export const startEngine = async (
+    id: number,
+    signal: AbortSignal
+): Promise<ICarVelocity> => {
+    const response = await fetch(`${BASE_URL}/engine?id=${id}&status=started`, {
         method: 'PATCH',
-    })
+        signal,
+    });
 
-    return await response.json()
-}
+    return await response.json();
+};
 
 export const stopEngine = async (id: number): Promise<ICarVelocity> => {
-    const response = await fetch(`${BASE_URL}/engine?id=${id}&status=stopped`,{
+    const response = await fetch(`${BASE_URL}/engine?id=${id}&status=stopped`, {
         method: 'PATCH',
-    })
+    });
 
-    return await response.json()
-}
+    return await response.json();
+};
 
-export const drive = async (id: number): Promise<ISuccessDrive> => {
-    const response = await fetch(`${BASE_URL}/engine?id=${id}&status=drive`,{
+export const drive = async (
+    id: number,
+    signal: AbortSignal
+): Promise<ISuccessDrive> => {
+    const response = await fetch(`${BASE_URL}/engine?id=${id}&status=drive`, {
         method: 'PATCH',
-    })
+        signal,
+    });
 
-    return await response.json()
-}
+    return await response.json();
+};

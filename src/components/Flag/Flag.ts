@@ -1,14 +1,17 @@
-import './Flag.scss'
+import './Flag.scss';
 
-export class Flag{
-    constructor(){
+export class Flag {
+    id: number;
+    constructor(id: number) {
+        this.id = id;
     }
 
-    render(){
+    render() {
         const flag = document.createElement('div');
+        flag.id = `flag-${this.id}`;
         flag.className = 'flag';
         flag.innerHTML = `<?xml version="1.0" encoding="iso-8859-1"?>
-        <svg fill="#92e41d" height="50px" width="50px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+        <svg fill="#92e41d" height="50px" width="50px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
              viewBox="0 0 512 512" xml:space="preserve">
         <g>
             <g>
@@ -21,9 +24,8 @@ export class Flag{
                     c-2.675,6.016-2.675,12.886,0,18.903l47.512,106.905H279.256z"/>
             </g>
         </g>
-        </svg>`
+        </svg>`;
 
-        return flag
-
+        return flag;
     }
 }

@@ -22,7 +22,8 @@ export interface StateData {
     sortBy: string | null;
     sortOrder: string | null;
     selectedCar: number | null;
-    animation: Record<number, {id?: number}>
+    animation: Record<number, { id?: number }>;
+    controller: AbortController;
 }
 
 export interface GetCarsData {
@@ -45,6 +46,6 @@ export interface ICarVelocity {
     distance: number;
 }
 
-export interface ISuccessDrive{
+export interface ISuccessDrive {
     success: boolean;
 }

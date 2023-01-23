@@ -4,6 +4,7 @@ export class Button {
     color?: string;
     text: string;
     className: string;
+
     constructor(text: string, className: string, color?: string) {
         this.color = color;
         this.text = text;

@@ -6,8 +6,10 @@ import './CarsList.scss';
 
 export class CarsList {
     carsData: CarsData;
-    constructor(carsData: CarsData) {
+    formElement: HTMLFormElement;
+    constructor(carsData: CarsData, formElement: HTMLFormElement) {
         this.carsData = carsData;
+        this.formElement = formElement;
     }
 
     render() {
@@ -17,8 +19,9 @@ export class CarsList {
 
         this.carsData.forEach((item) => {
             const listItem = document.createElement('li');
+            listItem.id = `car-track-${item.id}`
             listItem.className = 'cars-list-item';
-            listItem.append(new Track(item).render());
+            listItem.append(new Track(item, this.formElement).render());
             list.append(listItem);
         });
 

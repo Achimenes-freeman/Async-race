@@ -30,9 +30,9 @@ export class GarageMenu {
                 this.disabled = true;
                 await generateCars();
                 await updateGarageData();
-                document.getElementById(
-                    'garage-title'
-                )!.textContent = `Garage (${state.carsTotal})`;
+                // document.getElementById(
+                //     'garage-title'
+                // )!.textContent = `Garage (${state.carsTotal})`;
                 changeGarageCarsList();
 
                 const [btnNext, btnPrev] = [
@@ -45,13 +45,15 @@ export class GarageMenu {
             }
         });
 
+        const updateForm = new GarageForm('update').render();
+
         menu.append(
             new GarageForm('create').render(),
-            new GarageForm('update').render(),
+            updateForm,
             startRaceButton,
             resetRaceButton,
             generateCarsButton
         );
-        return menu;
+        return {menu, updateForm};
     }
 }

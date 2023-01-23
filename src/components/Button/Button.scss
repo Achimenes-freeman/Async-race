@@ -53,9 +53,19 @@
     &._fetch {
         color: $blue;
         border-color: $blue;
+
+        &[disabled]{
+            opacity: 1;
+        }
     }
 
     &:last-child {
         margin-right: 0;
+    }
+
+    &[disabled] {
+        &:hover {
+            background-color: transparent;
+        }
     }
 }

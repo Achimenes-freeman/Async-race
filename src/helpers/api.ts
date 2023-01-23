@@ -1,4 +1,5 @@
-import { GetCarsData, CreatedCar, SingleCar, IWinnersRequest } from './types';
+import { state } from './state';
+import { GetCarsData, CreatedCar, SingleCar, IWinnersRequest,ICarVelocity, ISuccessDrive } from './types';
 
 const BASE_URL = 'http://127.0.0.1:3000';
 export const MAX_GARAGE_PAGE_CARS_ON_LIST = 7;
@@ -49,3 +50,55 @@ export const createCar = async (car: CreatedCar): Promise<SingleCar> => {
 
     return await response.json();
 };
+
+export const updateCar = async (car: CreatedCar): Promise<SingleCar> => {
+    const response = await fetch(`${BASE_URL}/garage/${state.selectedCar}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(car),
+    })
+
+    return await response.json()
+}
+
+export const deleteCarFromGarage = async (id: number): Promise<boolean> => {
+    const response = await fetch(`${BASE_URL}/garage/${id}`, {
+        method: 'DELETE',
+    })
+
+    return response.ok
+}
+
+export const deleteCarFromWinners = async (id: number): Promise<boolean> => {
+    const response = await fetch(`${BASE_URL}/winners/${id}`, {
+        method: 'DELETE',
+    })
+
+    return response.ok
+}
+
+export const startEngine = async (id: number): Promise<ICarVelocity> => {
+    const response = await fetch(`${BASE_URL}/engine?id=${id}&status=started`,{
+        method: 'PATCH',
+    })
+
+    return await response.json()
+}
+
+export const stopEngine = async (id: number): Promise<ICarVelocity> => {
+    const response = await fetch(`${BASE_URL}/engine?id=${id}&status=stopped`,{
+        method: 'PATCH',
+    })
+
+    return await response.json()
+}
+
+export const drive = async (id: number): Promise<ISuccessDrive> => {
+    const response = await fetch(`${BASE_URL}/engine?id=${id}&status=drive`,{
+        method: 'PATCH',
+    })
+
+    return await response.json()
+}

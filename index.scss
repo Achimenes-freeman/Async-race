@@ -11,10 +11,17 @@
 html,
 body {
     margin: 0;
-    padding: 15px 20px;
 
     background-color: $black;
     color: $white;
     font-size: 16px;
     font-family: $ubuntu;
+}
+
+.main-layout{
+    padding: 15px 20px;
+
+    &-navigation{
+        margin-bottom: 30px;
+    }
 }

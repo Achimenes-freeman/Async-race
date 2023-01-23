@@ -12,13 +12,16 @@ export const updateGarageData = async (): Promise<void> => {
     const { data, carsTotal } = await getCarsData(state.garagePage);
     state.carsData = data;
     state.carsTotal = carsTotal;
+
+    document.getElementById('garage-title')!.textContent = `Garage (${carsTotal})`
 };
 
 export const changeGarageCarsList = () => {
+    const updateForm = document.getElementById('update-form') as HTMLFormElement;
     document.getElementById('garage-cars-list')?.remove();
     document
         .getElementById('garage-layout')
-        ?.append(new CarsList(state.carsData).render());
+        ?.append(new CarsList(state.carsData, updateForm).render());
 };
 
 export const changePaginationButtonsDisable = (

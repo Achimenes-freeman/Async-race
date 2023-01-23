@@ -21,6 +21,8 @@ export interface StateData {
     carsTotal: number;
     sortBy: string | null;
     sortOrder: string | null;
+    selectedCar: number | null;
+    animation: Record<number, {id?: number}>
 }
 
 export interface GetCarsData {
@@ -36,4 +38,13 @@ export interface IWinnersRequest {
     limit?: number;
     sort?: TSort;
     order?: TOrder;
+}
+
+export interface ICarVelocity {
+    velocity: number;
+    distance: number;
+}
+
+export interface ISuccessDrive{
+    success: boolean;
 }

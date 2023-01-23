@@ -60,11 +60,14 @@ export class Garage {
 
         garagePagination.append(garagePaginationText, buttonPrev, buttonNext);
 
+        const {menu, updateForm} = new GarageMenu().render();
+
+
         garageLayout.append(
-            new GarageMenu().render(),
+            menu,
             garageTitle,
             garagePagination,
-            new CarsList(state.carsData).render()
+            new CarsList(state.carsData, updateForm).render()
         );
         return garageLayout;
     }

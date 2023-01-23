@@ -16,4 +16,6 @@ export const state: StateData = {
     carsTotal,
     sortBy: null,
     sortOrder: null,
+    selectedCar: null,
+    animation: {},
 };

@@ -3,7 +3,10 @@ import {
     startEngine,
     stopEngine,
     MAX_GARAGE_PAGE_CARS_ON_LIST,
+    getWinner,
 } from './api';
+
+import { ModalWinnerTime } from '../components/ModalWinnerTime/ModalWinnerTime';
 import { state } from './state';
 
 const getElementCenter = (element: HTMLElement) => {
@@ -52,6 +55,12 @@ export const animation = (
 };
 
 export const startDriving = async (id: number, controller: AbortController) => {
+    let timer = 0;
+    function timerUp() {
+        ++timer;
+    }
+    const interval = setInterval(timerUp, 10);
+
     const [buttonStart] = Array.from(
         document.getElementsByTagName('button')
     ).filter((item) => item.id === `start-button-${id}`);
@@ -82,11 +91,13 @@ export const startDriving = async (id: number, controller: AbortController) => {
         state.animation[id] = animation(carImage, roadDistance, time);
 
         const { success } = await drive(id, controller.signal);
-        console.log(state.animation[id]);
+        clearInterval(interval);
         if (!success) {
             window.cancelAnimationFrame(state.animation[id].id!);
         }
+        return timer;
     } catch (error) {
+        clearInterval(interval);
         if (error instanceof Error) {
             if (error.name === 'AbortError') {
                 console.log('Car was stopped');
@@ -121,6 +132,8 @@ export const stopDriving = async (id: number, controller: AbortController) => {
 };
 
 export const startRace = async () => {
+    state.hasWinner = false;
+
     state.controller = new AbortController();
     state.animation = {};
 
@@ -131,9 +144,23 @@ export const startRace = async () => {
     nextBtn.disabled = true;
 
     await Promise.all(
-        state.carsData.map(
-            async (item) => await startDriving(item.id, state.controller)
-        )
+        state.carsData.map(async (item) => {
+            const winnerTime = await startDriving(item.id, state.controller);
+            if (!state.hasWinner && winnerTime) {
+                state.hasWinner = true;
+                const modalWinnerTime = new ModalWinnerTime(
+                    item.name,
+                    winnerTime
+                ).render();
+                document.body.append(modalWinnerTime);
+                const modalClose = setTimeout(() => {
+                    modalWinnerTime.remove();
+                    clearTimeout(modalClose);
+                }, 5000);
+
+                await getWinner(item.id, winnerTime / 100);
+            }
+        })
     );
 
     if (state.garagePage > 1) {

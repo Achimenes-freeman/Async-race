@@ -2,8 +2,10 @@ import { getCarsData, getWinnersData } from './api';
 import { StateData } from './types';
 
 const { data: carsData, carsTotal } = await getCarsData(1);
-const { data: winnersData, carsTotal: winnersTotal } = await getWinnersData({
+const { data: winnersData, winnersTotal } = await getWinnersData({
     page: 1,
+    sort: 'id',
+    order: 'DESC',
 });
 
 export const state: StateData = {
@@ -19,4 +21,5 @@ export const state: StateData = {
     selectedCar: null,
     animation: {},
     controller: new AbortController(),
+    hasWinner: false,
 };

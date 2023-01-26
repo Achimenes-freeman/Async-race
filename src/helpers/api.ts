@@ -6,6 +6,9 @@ import {
     IWinnersRequest,
     ICarVelocity,
     ISuccessDrive,
+    IUpdatedWinner,
+    IReceivedAndCreatedWinner,
+    GetWinnersData,
 } from './types';
 
 const BASE_URL = 'http://127.0.0.1:3000';
@@ -27,23 +30,29 @@ export const getCarsData = async (
 
 export const getWinnersData = async ({
     page,
-    limit = MAX_WINNERS_ON_LIST,
     sort,
     order,
-}: IWinnersRequest): Promise<GetCarsData> => {
+    limit = MAX_WINNERS_ON_LIST,
+}: IWinnersRequest): Promise<GetWinnersData> => {
     const response = await fetch(
         `${BASE_URL}/winners?_page=${page}&_limit=${limit}${
             sort && order ? `&_sort=${sort}&_order=${order}` : ''
         }`
     );
-    const result: GetCarsData = response.ok
+    const result: GetWinnersData = response.ok
         ? {
               data: await response.json(),
-              carsTotal: Number(response.headers.get('X-Total-Count')),
+              winnersTotal: Number(response.headers.get('X-Total-Count')),
           }
-        : { data: [], carsTotal: 0 };
+        : { data: [], winnersTotal: 0 };
 
     return result;
+};
+
+export const getCar = async (id: number) => {
+    const response = await fetch(`${BASE_URL}/garage/${id}`);
+
+    return await response.json();
 };
 
 export const createCar = async (car: CreatedCar): Promise<SingleCar> => {
@@ -116,4 +125,45 @@ export const drive = async (
     });
 
     return await response.json();
+};
+
+const updateWinner = async (id: number, body: IUpdatedWinner) => {
+    const response = await fetch(`${BASE_URL}/winners/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, ...body }),
+    });
+
+    return response.ok;
+};
+
+export const addNewWinner = async (body: IReceivedAndCreatedWinner) => {
+    const response = await fetch(`${BASE_URL}/winners`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+    });
+
+    return response.ok;
+};
+
+export const getWinner = async (id: number, winnerTime: number) => {
+    try {
+        const response = await fetch(`${BASE_URL}/winners/${id}`);
+        if (response.status === 404) {
+            throw new Error('404');
+        }
+        const { wins, time } = await response.json();
+
+        updateWinner(id, {
+            wins: wins + 1,
+            time: winnerTime < time ? winnerTime : time,
+        });
+    } catch (error) {
+        addNewWinner({ id, wins: 1, time: winnerTime });
+    }
 };

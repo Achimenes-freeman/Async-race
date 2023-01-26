@@ -1,0 +1,41 @@
+@import '../../../variables.scss';
+
+.winners-list-item {
+    width: 450px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px;
+    margin-bottom: 10px;
+
+    border-radius: 5px;
+    background-color: $card-bg;
+    font-size: 1.2rem;
+}
+
+.winner-wins,
+.winner-number,
+.winner-time,
+.winner-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.winner-number {
+    min-width: 20px;
+}
+
+.winner-name {
+    min-width: 170px;
+    flex-wrap: wrap;
+}
+
+.winner-time {
+    min-width: 50px;
+}
+
+.winner-wins {
+    min-width: 50px;
+}

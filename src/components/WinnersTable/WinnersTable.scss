@@ -1,0 +1,47 @@
+@import '../../../variables.scss';
+.winners-menu {
+    width: 450px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px;
+    margin-bottom: 10px;
+
+    border-radius: 5px;
+    background-color: $card-bg;
+    font-size: 1.2rem;
+}
+
+.menu-wins,
+.menu-number,
+.menu-time,
+.menu-name,
+.menu-car {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-number {
+    min-width: 20px;
+}
+
+.menu-name {
+    min-width: 170px;
+    flex-wrap: wrap;
+}
+
+.menu-time {
+    min-width: 50px;
+    cursor: pointer;
+}
+
+.menu-wins {
+    min-width: 50px;
+    cursor: pointer;
+}
+
+.menu-car {
+    min-width: 60px;
+}

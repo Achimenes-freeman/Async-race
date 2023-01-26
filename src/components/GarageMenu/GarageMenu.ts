@@ -51,8 +51,8 @@ export class GarageMenu {
                 changeGarageCarsList();
 
                 const [btnNext, btnPrev] = [
-                    document.getElementById('next') as HTMLButtonElement,
-                    document.getElementById('prev') as HTMLButtonElement,
+                    document.getElementById('garage-next') as HTMLButtonElement,
+                    document.getElementById('garage-prev') as HTMLButtonElement,
                 ];
 
                 changePaginationButtonsDisable(btnNext, btnPrev);

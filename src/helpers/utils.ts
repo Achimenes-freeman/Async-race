@@ -3,21 +3,27 @@ import {
     getCarsData,
     MAX_WINNERS_ON_LIST,
     MAX_GARAGE_PAGE_CARS_ON_LIST,
+    getWinnersData,
 } from './api';
 import { state } from './state';
 import { CarsList } from '../components/CarsList/CarsList';
 import { CreatedCar } from './types';
+import { WinnersTable } from '../components/WinnersTable/WinnersTable';
 
 export const updateGarageData = async (): Promise<void> => {
     const { data, carsTotal } = await getCarsData(state.garagePage);
     state.carsData = data;
     state.carsTotal = carsTotal;
 
-    document.getElementById('garage-title')!.textContent = `Garage (${carsTotal})`
+    document.getElementById(
+        'garage-title'
+    )!.textContent = `Garage (${carsTotal})`;
 };
 
 export const changeGarageCarsList = () => {
-    const updateForm = document.getElementById('update-form') as HTMLFormElement;
+    const updateForm = document.getElementById(
+        'update-form'
+    ) as HTMLFormElement;
     document.getElementById('garage-cars-list')?.remove();
     document
         .getElementById('garage-layout')
@@ -111,4 +117,25 @@ export const generateCars = async () => {
     await Promise.all(
         generatedCarsData.map(async (car) => await createCar(car))
     );
+};
+
+export const changeWinnersCarsList = async () => {
+    document.getElementById('winners-table')?.remove();
+    document
+        .getElementById('winners-layout')
+        ?.append(await new WinnersTable().render());
+};
+
+export const updateWinnersData = async (): Promise<void> => {
+    const { data, winnersTotal } = await getWinnersData({
+        page: state.winnersPage,
+        sort: state.sortBy,
+        order: state.sortOrder,
+    });
+    state.winnersData = data;
+    state.winnersTotal = winnersTotal;
+
+    document.getElementById(
+        'winners-title'
+    )!.textContent = `Winners (${winnersTotal})`;
 };

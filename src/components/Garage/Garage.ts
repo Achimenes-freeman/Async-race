@@ -19,7 +19,7 @@ export class Garage {
         garageLayout.id = 'garage-layout';
 
         const garageTitle = document.createElement('h1');
-        garageTitle.className = 'garage-title';
+        garageTitle.className = 'title';
         garageTitle.id = 'garage-title';
         garageTitle.textContent = `Garage (${state.carsTotal})`;
 

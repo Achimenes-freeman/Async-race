@@ -1,6 +1,8 @@
 import { getCar } from '../../helpers/api';
+import { state } from '../../helpers/state';
 import { WinnersData } from '../../helpers/types';
 import { Car } from '../Car/Car';
+import { MAX_WINNERS_ON_LIST } from '../../helpers/api';
 
 import './WinnersList.scss';
 
@@ -22,7 +24,9 @@ export class WinnersList {
 
             const number = document.createElement('span');
             number.className = 'winner-number';
-            number.textContent = `${index + 1}`;
+            number.textContent = `${
+                MAX_WINNERS_ON_LIST * (state.winnersPage - 1) + index + 1
+            }`;
 
             const carImage = new Car(color, item.id).render();
 
